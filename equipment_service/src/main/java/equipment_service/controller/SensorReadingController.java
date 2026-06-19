@@ -46,4 +46,9 @@ public class SensorReadingController {
         return sensorReadingService
                 .getLatestReadingByMachineId(machineId);
     }
+
+    @GetMapping("/export")
+    public List<SensorReading> exportData() {
+        return sensorReadingService.getAllReadings();
+    }
 }
