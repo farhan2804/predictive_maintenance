@@ -3,9 +3,10 @@ package equipment_service.controller;
 import equipment_service.entity.SensorReading;
 import equipment_service.service.SensorReadingService;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api/sensors")
 public class SensorReadingController {
