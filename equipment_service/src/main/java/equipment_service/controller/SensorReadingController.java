@@ -16,6 +16,11 @@ public class SensorReadingController {
         this.sensorReadingService = sensorReadingService;
     }
 
+    @GetMapping("/latest")
+    public SensorReading getLatestReading() {
+        return sensorReadingService.getLatestReading();
+    }
+
     @GetMapping
     public List<SensorReading> getAllReadings() {
 
@@ -25,5 +30,20 @@ public class SensorReadingController {
     @PostMapping
     public SensorReading saveReading(@RequestBody SensorReading reading) {
         return sensorReadingService.saveReading(reading);
+    }
+
+    @GetMapping("/machine/{machineId}")
+    public List<SensorReading> getReadingsByMachineId(
+            @PathVariable Long machineId) {
+
+        return sensorReadingService.getReadingsByMachineId(machineId);
+    }
+
+    @GetMapping("/machine/{machineId}/latest")
+    public SensorReading getLatestReadingByMachineId(
+            @PathVariable Long machineId) {
+
+        return sensorReadingService
+                .getLatestReadingByMachineId(machineId);
     }
 }

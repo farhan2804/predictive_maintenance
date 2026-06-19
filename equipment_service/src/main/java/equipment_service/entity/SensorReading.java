@@ -21,6 +21,15 @@ public class SensorReading {
     private Double rpm;
 
     private Double current;
+    private String healthStatus;
+
+    public String getHealthStatus() {
+        return healthStatus;
+    }
+
+    public void setHealthStatus(String healthStatus) {
+        this.healthStatus = healthStatus;
+    }
 
     private LocalDateTime readingTime;
 

@@ -35,19 +35,45 @@ public class SensorSimulatorService {
 
         if (!machines.isEmpty()) {
 
-            Machine machine =
-                    machines.get(random.nextInt(machines.size()));
+            Machine machine = machines.get(random.nextInt(machines.size()));
 
             reading.setMachine(machine);
         }
 
         reading.setReadingTime(LocalDateTime.now());
 
-        reading.setTemperature(60 + random.nextDouble() * 20);
-        reading.setVibration(1 + random.nextDouble() * 4);
-        reading.setPressure(10 + random.nextDouble() * 5);
-        reading.setRpm(1400 + random.nextDouble() * 200);
-        reading.setCurrent(20 + random.nextDouble() * 10);
+        int condition = random.nextInt(100);
+
+        if (condition < 70) {
+
+            reading.setHealthStatus("HEALTHY");
+
+            reading.setTemperature(60 + random.nextDouble() * 15);
+            reading.setVibration(1 + random.nextDouble() * 2);
+            reading.setPressure(10 + random.nextDouble() * 3);
+            reading.setRpm(1450 + random.nextDouble() * 100);
+            reading.setCurrent(20 + random.nextDouble() * 5);
+
+        } else if (condition < 90) {
+
+            reading.setHealthStatus("WARNING");
+
+            reading.setTemperature(80 + random.nextDouble() * 10);
+            reading.setVibration(3 + random.nextDouble() * 3);
+            reading.setPressure(14 + random.nextDouble() * 3);
+            reading.setRpm(1550 + random.nextDouble() * 100);
+            reading.setCurrent(25 + random.nextDouble() * 5);
+
+        } else {
+
+            reading.setHealthStatus("CRITICAL");
+
+            reading.setTemperature(95 + random.nextDouble() * 15);
+            reading.setVibration(7 + random.nextDouble() * 3);
+            reading.setPressure(18 + random.nextDouble() * 4);
+            reading.setRpm(1700 + random.nextDouble() * 150);
+            reading.setCurrent(30 + random.nextDouble() * 8);
+        }
 
         sensorReadingRepository.save(reading);
 

@@ -22,4 +22,17 @@ public class SensorReadingService {
     public List<SensorReading> getAllReadings() {
         return sensorReadingRepository.findAll();
     }
+
+    public SensorReading getLatestReading() {
+        return sensorReadingRepository.findTopByOrderByIdDesc();
+    }
+
+    public List<SensorReading> getReadingsByMachineId(Long machineId) {
+        return sensorReadingRepository.findByMachineId(machineId);
+    }
+
+    public SensorReading getLatestReadingByMachineId(Long machineId) {
+        return sensorReadingRepository
+                .findTopByMachineIdOrderByIdDesc(machineId);
+    }
 }
