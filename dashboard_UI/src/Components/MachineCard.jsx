@@ -8,7 +8,7 @@ const MachineCard = ({ machine }) => {
     const fetchSensorData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8080/api/sensors/machine/${machine.id}/latest`
+          `http://localhost:8080/api/sensors/machine/${machine.id}/latest`,
         );
 
         const sensorData = await response.json();
@@ -29,7 +29,7 @@ const MachineCard = ({ machine }) => {
               rpm: sensorData.rpm,
               current: sensorData.current,
             }),
-          }
+          },
         );
 
         const predictionData = await predictionResponse.json();
@@ -117,28 +117,36 @@ const MachineCard = ({ machine }) => {
           <hr />
 
           <p>
-            🌡️ <strong>Temperature:</strong>{" "}
-            {sensor.temperature?.toFixed(2)} °C
+            🌡️ <strong>Temperature:</strong> {sensor.temperature?.toFixed(2)} °C
           </p>
 
           <p>
-            📳 <strong>Vibration:</strong>{" "}
-            {sensor.vibration?.toFixed(2)}
+            📳 <strong>Vibration:</strong> {sensor.vibration?.toFixed(2)}
+          </p>
+
+          <div className="probability-section">
+            <div className="probability-label">📈 Failure Probability</div>
+
+            <div className="progress-bar">
+              <div
+                className="progress-fill"
+                style={{
+                  width: `${prediction?.probability || 0}%`,
+                }}
+              ></div>
+            </div>
+
+            <div className="probability-value">
+              {prediction?.probability ?? "--"}%
+            </div>
+          </div>
+
+          <p>
+            ⏳ <strong>Remaining Useful Life:</strong> {getRemainingLife()}
           </p>
 
           <p>
-            📈 <strong>Failure Probability:</strong>{" "}
-            {prediction?.probability ?? "--"}%
-          </p>
-
-          <p>
-            ⏳ <strong>Remaining Useful Life:</strong>{" "}
-            {getRemainingLife()}
-          </p>
-
-          <p>
-            🛠️ <strong>Maintenance:</strong>{" "}
-            {getMaintenanceRecommendation()}
+            🛠️ <strong>Maintenance:</strong> {getMaintenanceRecommendation()}
           </p>
 
           {prediction && (

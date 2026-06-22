@@ -4,21 +4,41 @@ import "./App.css";
 
 const App = () => {
   const [machines, setMachines] = useState([]);
-
+  const [lastUpdated, setLastUpdated] = useState(
+    new Date().toLocaleTimeString(),
+  );
   useEffect(() => {
     fetch("http://localhost:8080/api/machines")
       .then((response) => response.json())
       .then((data) => setMachines(data))
       .catch((error) => console.error(error));
+    const timer = setInterval(() => {
+      setLastUpdated(new Date().toLocaleTimeString());
+    }, 1000);
+
+    return () => clearInterval(timer);
   }, []);
 
   return (
     <div className="app-container">
       <div className="dashboard-header">
-        <h1>🏭 AI-Powered Predictive Maintenance Platform</h1>
+        <div className="live-indicator">
+          <span className="live-dot"></span>
+          LIVE SYSTEM
+        </div>
+
+        <h1>AI Predictive Maintenance Platform</h1>
+
         <p>
-          Real-Time Machine Health Monitoring & Failure Prediction
+          Real-Time Equipment Health Monitoring & Failure Prediction using
+          Machine Learning
         </p>
+
+        <div className="tech-stack">
+          React • Spring Boot • FastAPI • PostgreSQL • Random Forest
+        </div>
+
+        <div className="last-updated">Last Updated: {lastUpdated}</div>
       </div>
 
       <div className="stats-row">
@@ -45,10 +65,7 @@ const App = () => {
 
       <div className="dashboard-grid">
         {machines.map((machine) => (
-          <MachineCard
-            key={machine.id}
-            machine={machine}
-          />
+          <MachineCard key={machine.id} machine={machine} />
         ))}
       </div>
     </div>
